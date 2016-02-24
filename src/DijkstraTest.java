@@ -44,6 +44,23 @@ public class DijkstraTest {
 		Dijkstra d = new Dijkstra(3, 0, g);
 		assertEquals("[3, 2, 1, 0]", d.getPath().toString());
 	}
+	
+	@Test
+	public void testC(){
+		@SuppressWarnings("unchecked")
+		Map<Integer, Double>[] neighbors = new Map[5];
+		for(int i = 0; i < neighbors.length; i++){
+			neighbors[i] = new HashMap<Integer, Double>();
+		}
+		neighbors[0].put(1, 3.0);
+		neighbors[0].put(3, 10.0);
+		neighbors[1].put(2, 4.0);
+		neighbors[2].put(4, 2.0);
+		neighbors[3].put(4, 3.0);
+		Graph g = new Graph(neighbors);
+		Dijkstra d = new Dijkstra(0, 4, g);
+		assertEquals("[0, 1, 2, 4]", d.getPath().toString());
+	}
 
 
 }
