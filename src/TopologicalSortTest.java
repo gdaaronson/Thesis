@@ -31,7 +31,7 @@ public class TopologicalSortTest {
 
 	@Test
 	public void testTopologicalSort() {
-		assertEquals("[3, 4, 1, 0, 5, 2]", t.getList().toString());
+		assertEquals("[2, 5, 0, 1, 4, 3]", t.getList().toString());
 	}
 
 }
