@@ -11,33 +11,16 @@ public class Expirement {
 	public Expirement(Graph g, int source, int target, Map<Integer, Edge> map) {
 		list = new LinkedList<Integer>();
 		int n = g.size();
+		int gates = 0;
 		for (int key : map.keySet()) {
-			g.expandGraph(key, map.get(key));
+			g.expandGraph(key, map.get(key), n);
+			gates++;
 		}
-		verticies = new Vertex[2 * n];
+		verticies = new Vertex[(gates + 1) * n];
 		for (int i = 0; i < g.size(); i++) {
 			verticies[i] = new Vertex(i);
 		}
-		Dijkstra(source, target + n, g);
-	}
-
-	public void DFS(Graph g) {
-		for (int i = 0; i < g.size(); i++) {
-			if (verticies[i].getColor() == Color.WHITE) {
-				DFSVisit(g, i);
-			}
-		}
-	}
-
-	private void DFSVisit(Graph g, int u) {
-		verticies[u].setColor(Color.GRAY);
-		for (int v : g.getNeighbors(u).keySet()) {
-			if (verticies[v].getColor() == Color.WHITE) {
-				DFSVisit(g, v);
-			}
-		}
-		verticies[u].setColor(Color.BLACK);
-		list.add(0, u);
+		Dijkstra(source, target + n * gates, g);
 	}
 
 	public void Dijkstra(int source, int target, Graph graph) {

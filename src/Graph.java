@@ -9,20 +9,20 @@ public class Graph {
 	 */
 	private Map<Integer, Double>[] neighbors;
 	
-	public void expandGraph(int key, Edge gate){
+	public void expandGraph(int key, Edge gate, int originalSize){
 		int size = neighbors.length;
-		Map<Integer, Double>[] big= new HashMap [2*size];
+		Map<Integer, Double>[] big= new HashMap [originalSize + size];
 		for(int i = 0; i < size; i++){
 			big[i] = new HashMap<Integer, Double>();
-			big[i + size] = new HashMap<Integer, Double>();
+			big[i + originalSize] = new HashMap<Integer, Double>();
 			for(int j : neighbors[i].keySet()){
 				big[i].put(j, neighbors[i].get(j));
-				big[i + size].put(j + size, neighbors[i].get(j));
+				big[i + originalSize].put(j + originalSize, neighbors[i].get(j));
 			}
 		}
 		neighbors = big;
 		addNeighbor(new Edge(gate.getStart() + size, gate.getEnd() + size, gate.getLength()));
-		addNeighbor(new Edge(key, key + size, 0));
+		addNeighbor(new Edge(key + size - originalSize, key + size, 0));
 	}
 
 	public void addNeighbor(Edge requirement) {
