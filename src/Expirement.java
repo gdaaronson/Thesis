@@ -5,22 +5,58 @@ import java.util.Map;
 public class Expirement {
 
 	private LinkedList<Integer> list;
+	
+	private LinkedList<Integer> listMod;
 
 	private Vertex[] verticies;
 
+	private Graph graph;
+
 	public Expirement(Graph g, int source, int target, Map<Integer, Edge> map) {
 		list = new LinkedList<Integer>();
+		listMod = new LinkedList<Integer>();
 		int n = g.size();
-		int gates = 0;
-		for (int key : map.keySet()) {
-			g.expandGraph(key, map.get(key), n);
-			gates++;
-		}
-		verticies = new Vertex[(gates + 1) * n];
+		g.makePlanes(map.size());
+		verticies = new Vertex[g.size()];
 		for (int i = 0; i < g.size(); i++) {
 			verticies[i] = new Vertex(i);
 		}
-		Dijkstra(source, target + n * gates, g);
+		Edge[] mapIndex = new Edge[map.size()];
+		int index = 0;
+		for (int key : map.keySet()) {
+			System.out.println("key(" + index + ") = " + key);
+			mapIndex[index] = map.get(key);
+			mapIndex[index].setIndex(key);
+			index++;
+		}
+
+		for (int j = 0; j < g.getNumerOfPlanes(); j++) {
+			for (int i = 0; i < mapIndex.length; i++) {
+				if(((1 << i) & j) != 0){
+					g.addNeighbor(mapIndex[i], j);
+					g.addNeighbor(mapIndex[i], j -(1 << i), j, mapIndex[i].getIndex());
+				}
+			}
+		}
+		
+		System.out.println(g);
+		graph = g;
+		Dijkstra(source, target + g.size() - n, g);
+		extractListMod(g);
+	}
+
+	public void extractListMod(Graph g) {
+		int last = -1;
+		for(Integer i: list){
+			if(last != i % g.getSizeOfPlane()){
+				listMod.add(i % g.getSizeOfPlane());
+			}
+			last = i % g.getSizeOfPlane();
+		}
+	}
+
+	public LinkedList<Integer> getListMod() {
+		return listMod;
 	}
 
 	public void Dijkstra(int source, int target, Graph graph) {
@@ -64,5 +100,9 @@ public class Expirement {
 
 	public LinkedList<Integer> getList() {
 		return list;
+	}
+
+	public Graph getGraph() {
+		return graph;
 	}
 }

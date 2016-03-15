@@ -1,7 +1,7 @@
 
 public class Edge {
 	
-	private int start, end;
+	private int start, end, index;
 	
 	private double length;
 	
@@ -26,6 +26,14 @@ public class Edge {
 	@Override
 	public String toString() {
 		return "Edge [start=" + start + ", end=" + end + ", length=" + length + "]";
+	}
+
+	public void setIndex(int index){
+		this.index = index;
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	
