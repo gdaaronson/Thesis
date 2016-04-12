@@ -59,8 +59,8 @@ public class Expirement {
 		dijkstras(g, source);
 		double minDistance = Double.POSITIVE_INFINITY;
 		int indexOfVertex = -1;
-		for(int i = target; i < g.size(); i+=n){
-			if(verticies[i].getDistanceFromSource() < minDistance){
+		for (int i = target; i < g.size(); i += n) {
+			if (verticies[i].getDistanceFromSource() < minDistance) {
 				minDistance = verticies[i].getDistanceFromSource();
 				indexOfVertex = i;
 			}
@@ -70,14 +70,10 @@ public class Expirement {
 	}
 
 	/**
-	 * Dijkstra's Algorithm
+	 * Part of Dijkstra's Algorithm which creates the path
 	 * 
-	 * @param source
-	 *            The starting location
 	 * @param target
 	 *            The ending location
-	 * @param graph
-	 *            The graph
 	 */
 	public void dijkstra(int target) {
 		while (verticies[target].getPi() != -1) {
@@ -88,7 +84,7 @@ public class Expirement {
 	}
 
 	/**
-	 * A sub-method for Dijkstra's Algorithm
+	 * Part of Dijkstra's Algorithm which calculates distances from the source
 	 * 
 	 * @param graph
 	 *            The graph
