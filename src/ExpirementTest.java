@@ -104,20 +104,20 @@ public class ExpirementTest {
 		for(int i = 0; i < movement.length; i++){
 			movement[i] = new HashMap<Integer, Double>();
 		}
-		movement[0].put(1, 1.0);
-		movement[0].put(3, 1.0);
-		movement[1].put(0, 1.0);
-		movement[3].put(0, 1.0);
+		movement[0].put(1, 10.0);
+		movement[0].put(3, 10.0);
+		movement[1].put(0, 10.0);
+		movement[3].put(0, 10.0);
 
-		movement[5].put(2, 1.0);
-		movement[5].put(4, 1.0);
-		movement[2].put(5, 1.0);
-		movement[4].put(5, 1.0);
+		movement[5].put(2, 10.0);
+		movement[5].put(4, 10.0);
+		movement[2].put(5, 10.0);
+		movement[4].put(5, 10.0);
 
 		Graph g = new Graph(movement);
 		Map<Integer, Edge> map = new HashMap<Integer, Edge>();
-		map.put(3, new Edge(1, 2, 1.0));
-		map.put(1, new Edge(3, 4, 3.0));
+		map.put(3, new Edge(1, 2, 10.0));
+		map.put(1, new Edge(3, 4, 30.0));
 		Expirement e = new Expirement(g, 0, 5, map);
 		assertEquals("0 -> [1, 3]\n1 -> [0, 7]\n2 -> [5]\n3 -> [0, 15]\n4 -> [5]\n5 -> [2, 4]\n6 -> [7, 9]\n7 -> [6]\n8 -> [11]\n9 -> [6, 10, 21]\n10 -> [9, 11]\n11 -> [8, 10]\n12 -> [13, 15]\n13 -> [12, 14, 19]\n14 -> [13, 17]\n15 -> [12]\n16 -> [17]\n17 -> [14, 16]\n18 -> [19, 21]\n19 -> [18, 20]\n20 -> [19, 23]\n21 -> [18, 22]\n22 -> [21, 23]\n23 -> [20, 22]\n", e.getGraph().toString());
 		assertEquals("[0, 3, 15, 12, 13, 14, 17]", e.getList().toString());
