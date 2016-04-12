@@ -56,7 +56,16 @@ public class Expirement {
 			}
 		}
 		graph = g;
-		dijkstra(source, target + g.size() - n, g);
+		dijkstras(g, source);
+		double minDistance = Double.POSITIVE_INFINITY;
+		int indexOfVertex = -1;
+		for(int i = target; i < g.size(); i+=n){
+			if(verticies[i].getDistanceFromSource() < minDistance){
+				minDistance = verticies[i].getDistanceFromSource();
+				indexOfVertex = i;
+			}
+		}
+		dijkstra(indexOfVertex);
 		extractListMod(g);
 	}
 
@@ -70,14 +79,12 @@ public class Expirement {
 	 * @param graph
 	 *            The graph
 	 */
-	public void dijkstra(int source, int target, Graph graph) {
-		int u = target;
-		dijkstras(graph, source);
-		while (verticies[u].getPi() != -1) {
-			list.add(0, u);
-			u = verticies[u].getPi();
+	public void dijkstra(int target) {
+		while (verticies[target].getPi() != -1) {
+			list.add(0, target);
+			target = verticies[target].getPi();
 		}
-		list.add(0, u);
+		list.add(0, target);
 	}
 
 	/**
@@ -95,7 +102,7 @@ public class Expirement {
 		}
 		verticies[source].setDistanceFromSource(0);
 		while (!q.isEmpty()) {
-			int u = findMinDistance(q);
+			int u = findClosestVertex(q);
 			q.remove(new Integer(u));
 			for (int v : graph.getNeighbors(u).keySet()) {
 				double alt = verticies[u].getDistanceFromSource() + graph.getNeighbors(u).get(v);
@@ -114,25 +121,21 @@ public class Expirement {
 	 *            The graph of the game
 	 */
 	public void extractListMod(Graph g) {
-		int last = -1;
 		for (Integer i : list) {
-			if (last != i % g.getSizeOfPlane()) {
-				listMod.add(i % g.getSizeOfPlane());
-			}
-			last = i % g.getSizeOfPlane();
+			listMod.add(i % g.getSizeOfPlane());
 		}
 	}
 
 	/**
-	 * Finds the minimum distance away from a vertex given a list of its
-	 * neighbors
+	 * Returns the vertex in the q with the lowest distance from the source
 	 * 
-	 * @param Q
+	 * 
+	 * @param q
 	 *            the list of neighbors
 	 */
-	public int findMinDistance(ArrayList<Integer> Q) {
-		Integer u = Q.get(0);
-		for (int v : Q) {
+	public int findClosestVertex(ArrayList<Integer> q) {
+		Integer u = q.get(0);
+		for (int v : q) {
 			if (verticies[v].getDistanceFromSource() < verticies[u].getDistanceFromSource()) {
 				u = v;
 			}

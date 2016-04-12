@@ -42,7 +42,6 @@ public class Graph {
 	
 	public void addNeighbor(Edge requirement, int planeA, int planeB, int keyOfConnection) {
 		neighbors[keyOfConnection + planeA * sizeOfPlane].put(keyOfConnection + planeB * sizeOfPlane, 0.0);
-		neighbors[keyOfConnection + planeB * sizeOfPlane].put(keyOfConnection + planeA * sizeOfPlane, 0.0);
 	}
 	
 	@Override
