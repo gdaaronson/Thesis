@@ -4,11 +4,6 @@ import java.util.Queue;
 
 public class BreadthFirstSearch {
 
-	/** An enum containing colors for BFS */
-	public enum Color {
-		BLACK, GRAY, WHITE
-	}
-
 	/** An inner class for book keeping */
 	private class Vertex {
 

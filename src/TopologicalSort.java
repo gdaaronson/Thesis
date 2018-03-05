@@ -2,11 +2,6 @@ import java.util.LinkedList;
 
 public class TopologicalSort {
 
-	/** An enum containing colors for Topological Sort */
-	public enum Color {
-		BLACK, GRAY, WHITE
-	}
-
 	/** An inner class for book keeping */
 	private class Vertex {
 
@@ -55,7 +50,7 @@ public class TopologicalSort {
 	 *            The graph to sort
 	 */
 	public TopologicalSort(Graph g) {
-		list = new LinkedList<Integer>();
+		list = new LinkedList<>();
 		DFS(g);
 	}
 

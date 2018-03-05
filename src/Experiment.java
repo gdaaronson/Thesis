@@ -33,8 +33,8 @@ public class Experiment {
 	 */
 	public Experiment(Graph g, int source, int target, Map<Integer, Edge> map) {
 		// Initialization
-		list = new LinkedList<Integer>();
-		listMod = new LinkedList<Integer>();
+		list = new LinkedList<>();
+		listMod = new LinkedList<>();
 		int n = g.size();
 		g.makePlanes(map.size());
 		vertices = new Vertex[g.size()];

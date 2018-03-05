@@ -8,15 +8,15 @@ public class Graph {
 	 * A map that connects vertices, represented by integers, to the distance
 	 * between neighbors
 	 */
-	private Map<Integer, Double>[] neighbors;
+	private HashMap<Integer, Double>[] neighbors;
 	
 	private int sizeOfPlane;
 
-	private Map<Integer, Double>[][] plane;
+	private HashMap[][] plane;
 	
 	public void makePlanes(int sizeOfMap){
 		sizeOfPlane = size();
-		Map<Integer, Double>[] big = new HashMap [(int) (size()*Math.pow(2, sizeOfMap))];
+		HashMap[] big = new HashMap [(int) (size() * Math.pow(2, sizeOfMap))];
 		plane = new HashMap[(int) Math.pow(2, sizeOfMap)][size()];
 		for(int i = 0; i < big.length; i++){
 			big[i] = new HashMap<Integer, Double>();
@@ -66,7 +66,7 @@ public class Graph {
 	 * @param neighbors
 	 *            the list of vertices which are one degree away
 	 */
-	public Graph(Map<Integer, Double>[] neighbors) {
+	public Graph(HashMap<Integer, Double>[] neighbors) {
 		this.neighbors = neighbors;
 	}
 
@@ -86,7 +86,7 @@ public class Graph {
 	 * @param neighbors
 	 *            the set of all neighbors
 	 */
-	public void setNeighbors(Map<Integer, Double>[] neighbors) {
+	public void setNeighbors(HashMap<Integer, Double>[] neighbors) {
 		this.neighbors = neighbors;
 	}
 

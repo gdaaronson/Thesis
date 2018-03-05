@@ -12,9 +12,9 @@ public class GraphTest {
 	@Before
 	public void setUp() throws Exception {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] movement = new Map[5];
+		HashMap<Integer, Double>[] movement = new HashMap[5];
 		for(int i = 0; i < movement.length; i++){
-			movement[i] = new HashMap<Integer, Double>();
+			movement[i] = new HashMap<>();
 		}
 		movement[0].put(3, 1.0);
 		movement[1].put(2, 2.0);
