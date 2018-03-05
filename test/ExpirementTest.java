@@ -12,9 +12,9 @@ public class ExpirementTest {
 	@Test
 	public void testSingleKey() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] movement = new Map[5];
+		HashMap<Integer, Double>[] movement = new HashMap[5];
 		for(int i = 0; i < movement.length; i++){
-			movement[i] = new HashMap<Integer, Double>();
+			movement[i] = new HashMap<>();
 		}
 		movement[0].put(3, 1.0);
 		movement[1].put(2, 1.0);
@@ -23,7 +23,7 @@ public class ExpirementTest {
 		movement[3].put(0, 1.0);
 		movement[4].put(2, 1.0);
 		Graph g = new Graph(movement);
-		Map<Integer, Edge> map = new HashMap<Integer, Edge>();
+		Map<Integer, Edge> map = new HashMap<>();
 		map.put(3, new Edge(0, 1, 1.0));
 		Experiment e = new Experiment(g, 0, 4, map);
 		assertEquals("[0, 3, 8, 5, 6, 7, 9]", e.getList().toString());
@@ -32,9 +32,9 @@ public class ExpirementTest {
 	@Test
 	public void testDoubleIndepentKey() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] movement = new Map[6];
+		HashMap<Integer, Double>[] movement = new HashMap[6];
 		for(int i = 0; i < movement.length; i++){
-			movement[i] = new HashMap<Integer, Double>();
+			movement[i] = new HashMap<>();
 		}
 		movement[0].put(1, 1.0);
 		movement[0].put(3, 1.0);
@@ -59,9 +59,9 @@ public class ExpirementTest {
 	@Test
 	public void testDoubleDepedepentKey() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] movement = new Map[4];
+		HashMap<Integer, Double>[] movement = new HashMap[4];
 		for(int i = 0; i < movement.length; i++){
-			movement[i] = new HashMap<Integer, Double>();
+			movement[i] = new HashMap<>();
 		}
 		movement[0].put(1, 1.0);
 		movement[1].put(0, 1.0);
@@ -77,9 +77,9 @@ public class ExpirementTest {
 	@Test
 	public void testTripleDepedepentKey() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] movement = new Map[6];
+		HashMap<Integer, Double>[] movement = new HashMap[6];
 		for(int i = 0; i < movement.length; i++){
-			movement[i] = new HashMap<Integer, Double>();
+			movement[i] = new HashMap<>();
 		}
 		movement[3].put(0, 1.0);
 		movement[0].put(3, 1.0);
@@ -87,7 +87,7 @@ public class ExpirementTest {
 		movement[4].put(3, 1.0);
 		
 		Graph g = new Graph(movement);
-		Map<Integer, Edge> map = new HashMap<Integer, Edge>();
+		Map<Integer, Edge> map = new HashMap<>();
 		map.put(2, new Edge(4, 5, 1.0));
 		map.put(3, new Edge(0, 1, 1.0));
 		map.put(4, new Edge(1, 2, 1.0));
@@ -101,9 +101,9 @@ public class ExpirementTest {
 	@Test
 	public void testDoubleIndepentKeyForPaper() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] movement = new Map[6];
+		HashMap<Integer, Double>[] movement = new HashMap[6];
 		for(int i = 0; i < movement.length; i++){
-			movement[i] = new HashMap<Integer, Double>();
+			movement[i] = new HashMap<>();
 		}
 		movement[0].put(1, 10.0);
 		movement[0].put(3, 10.0);
@@ -116,7 +116,7 @@ public class ExpirementTest {
 		movement[4].put(5, 10.0);
 
 		Graph g = new Graph(movement);
-		Map<Integer, Edge> map = new HashMap<Integer, Edge>();
+		Map<Integer, Edge> map = new HashMap<>();
 		map.put(3, new Edge(1, 2, 10.0));
 		map.put(1, new Edge(3, 4, 30.0));
 		Experiment e = new Experiment(g, 0, 5, map);

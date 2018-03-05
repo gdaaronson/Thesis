@@ -11,9 +11,9 @@ public class DijkstraTest {
 	@Test
 	public void testA() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] neighbors = new Map[5];
+		HashMap<Integer, Double>[] neighbors = new HashMap[5];
 		for(int i = 0; i < neighbors.length; i++){
-			neighbors[i] = new HashMap<Integer, Double>();
+			neighbors[i] = new HashMap<>();
 		}
 		neighbors[0].put(1, 5.0);
 		neighbors[0].put(4, 4.0);
@@ -28,9 +28,9 @@ public class DijkstraTest {
 	@Test
 	public void testB() {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] neighbors = new Map[5];
+		HashMap<Integer, Double>[] neighbors = new HashMap[5];
 		for(int i = 0; i < neighbors.length; i++){
-			neighbors[i] = new HashMap<Integer, Double>();
+			neighbors[i] = new HashMap<>();
 		}
 		neighbors[0].put(1, 56.0);
 		neighbors[0].put(3, 8.0);
@@ -48,9 +48,9 @@ public class DijkstraTest {
 	@Test
 	public void testC(){
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] neighbors = new Map[5];
+		HashMap<Integer, Double>[] neighbors = new HashMap[5];
 		for(int i = 0; i < neighbors.length; i++){
-			neighbors[i] = new HashMap<Integer, Double>();
+			neighbors[i] = new HashMap<>();
 		}
 		neighbors[0].put(1, 3.0);
 		neighbors[0].put(3, 10.0);

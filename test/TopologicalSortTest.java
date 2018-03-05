@@ -13,9 +13,9 @@ public class TopologicalSortTest {
 	@Before
 	public void setUp() throws Exception {
 		@SuppressWarnings("unchecked")
-		Map<Integer, Double>[] neighbors = new Map[6];
+		HashMap<Integer, Double>[] neighbors = new HashMap[6];
 		for(int i = 0; i < neighbors.length; i++){
-			neighbors[i] = new HashMap<Integer, Double>();
+			neighbors[i] = new HashMap<>();
 		}
 		neighbors[0].put(1, 1.0);
 		neighbors[0].put(3, 1.0);
