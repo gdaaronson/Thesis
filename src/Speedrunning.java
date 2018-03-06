@@ -1,23 +1,22 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Map;
+
 
 public class Speedrunning {
 
     /** The graph of the game */
     private Graph graph;
 
-    /** The list of vertices in the order they are visited */
-    private LinkedList<Integer> list;
-
-    /**
-     * The list of vertices that are modified to give the order in terms of the
-     * original output. This is for the human readable output
-     */
-    private LinkedList<Integer> listMod;
-
     /** The list of vertices */
-    private Vertex[] vertices;
+    private ArrayList<Vertex> vertices;
+
+    public LinkedList<Vertex> getList() {
+        return list;
+    }
+
+    public void setList(LinkedList<Vertex> list) {
+        this.list = list;
+    }
 
     /**
      * The constructor for the class
@@ -31,59 +30,30 @@ public class Speedrunning {
      * @param map
      *            The map which contains the requirements of the game
      */
-    public Speedrunning(Graph g, int source, int target, Map<Integer, Edge> map) {
+
+    private LinkedList<Vertex> list;
+
+    public Speedrunning(Graph g, String source, String target) {
         // Initialization
+        vertices = g.getVert();
         list = new LinkedList<>();
-        listMod = new LinkedList<>();
-        int n = g.size();
-        g.makePlanes(map.size());
-        vertices = new Vertex[g.size()];
-        for (int i = 0; i < g.size(); i++) {
-            vertices[i] = new Vertex(i);
-        }
+
         // Put the keys in sequential order
-        Edge[] mapIndex = new Edge[map.size()];
-        int index = 0;
-        for (int key : map.keySet()) {
-            mapIndex[index] = map.get(key);
-            mapIndex[index].setIndex(key);
-            index++;
-        }
-        // Create all planes of existence
-        for (int j = 0; j < g.getNumerOfPlanes(); j++) {
-            for (int i = 0; i < mapIndex.length; i++) {
-                if (((1 << i) & j) != 0) {
-                    g.addNeighbor(mapIndex[i], j);
-                    g.addNeighbor(mapIndex[i], j - (1 << i), j, mapIndex[i].getIndex());
-                }
-            }
-        }
+        ArrayList<Edge> mapIndex = g.getEdges();
+
         graph = g;
         // Call Dijkstra's Algorithm
         searchFrom(g, source);
         double minDistance = Double.POSITIVE_INFINITY;
-        int indexOfVertex = -1;
         // Find the shortest path of all the possible destinations
-        for (int i = target; i < g.size(); i += n) {
-            if (vertices[i].getDistanceFromSource() < minDistance) {
-                minDistance = vertices[i].getDistanceFromSource();
-                indexOfVertex = i;
+        Vertex pathTo = null;
+        for(Vertex v : getVertexFromKey(target)){
+            if (v.getDistanceFromSource() < minDistance) {
+                pathTo = v;
+                minDistance = v.getDistanceFromSource();
             }
         }
-        findPathTo(indexOfVertex);
-        extractRoute(g);
-    }
-
-    /**
-     * This finds the human readable output
-     *
-     * @param g
-     *            The graph of the game
-     */
-    public void extractRoute(Graph g) {
-        for (Integer i : list) {
-            listMod.add(i % g.getSizeOfPlane());
-        }
+        findPathTo(pathTo);
     }
 
     /**
@@ -93,14 +63,27 @@ public class Speedrunning {
      * @param q
      *            the list of neighbors
      */
-    public int findClosestVertex(ArrayList<Integer> q) {
-        Integer u = q.get(0);
-        for (int v : q) {
-            if (vertices[v].getDistanceFromSource() < vertices[u].getDistanceFromSource()) {
+    public Vertex findClosestVertex(ArrayList<Vertex> q) {
+        Vertex u = q.get(0);
+        double distance = Double.POSITIVE_INFINITY;
+        //TODO might need to change to just vertecies
+        for (Vertex v : getVertexFromKey(u.getName())) {
+            if (v.getDistanceFromSource() < distance) {
                 u = v;
+                distance = v.getDistanceFromSource();
             }
         }
         return u;
+    }
+
+    public LinkedList<Vertex> getVertexFromKey(String key){
+        LinkedList<Vertex> verts = new LinkedList<>();
+        for(Vertex v : vertices){
+            if(v.getName().equals(key)){
+                verts.add(v);
+            }
+        }
+        return verts;
     }
 
     /**
@@ -109,10 +92,13 @@ public class Speedrunning {
      * @param target
      *            The ending location
      */
-    public void findPathTo(int target) {
-        while (vertices[target].getPi() != -1) {
-            list.add(0, target);
-            target = vertices[target].getPi();
+    public void findPathTo(Vertex target) {
+        //TODO might need to append numbers onto stings for different planes of existance
+        for(Vertex v : vertices){
+            if(v.getPrevious() != null) {
+                list.add(0, target);
+                target = v.getPrevious();
+            }
         }
         list.add(0, target);
     }
@@ -122,15 +108,6 @@ public class Speedrunning {
         return graph;
     }
 
-    /** Getter for the list */
-    public LinkedList<Integer> getList() {
-        return list;
-    }
-
-    /** Getter for the human readable output */
-    public LinkedList<Integer> getListMod() {
-        return listMod;
-    }
 
     /**
      * Part of Dijkstra's Algorithm which calculates distances from the source
@@ -140,20 +117,20 @@ public class Speedrunning {
      * @param source
      *            The starting location
      */
-    public void searchFrom(Graph graph, int source) {
-        ArrayList<Integer> q = new ArrayList<>();
-        for (int v = 0; v < graph.size(); v++) {
+    public void searchFrom(Graph graph, String source) {
+        ArrayList<Vertex> q = new ArrayList<>();
+        for (Vertex v: vertices) {
             q.add(v);
         }
-        vertices[source].setDistanceFromSource(0);
+//        getVertexFromKey(source).setDistanceFromSource(0);
         while (!q.isEmpty()) {
-            int u = findClosestVertex(q);
-            q.remove(new Integer(u));
-            for (int v : graph.getNeighbors(u).keySet()) {
-                double alt = vertices[u].getDistanceFromSource() + graph.getNeighbors(u).get(v);
-                if (alt < vertices[v].getDistanceFromSource()) {
-                    vertices[v].setDistanceFromSource(alt);
-                    vertices[v].setPi(u);
+            Vertex u = findClosestVertex(q);
+            q.remove(new Vertex(u.getName()));
+            for (Vertex v : graph.getVert()) {
+                double alt = u.getDistanceFromSource() + u.getDistanceFromSource();
+                if (alt < v.getDistanceFromSource()) {
+                    v.setDistanceFromSource(alt);
+                    v.setPrevious(u.getPrevious());
                 }
             }
         }

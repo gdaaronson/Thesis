@@ -3,17 +3,61 @@ public class Vertex {
 
 	private Color color;
 
-	private int id;
-	
-	private int pi;
+	private Vertex previous;
 	
 	private double distanceFromSource;
-	
-	public Vertex(int id) {
-		this.id = id;
+
+	private int plane;
+
+	public String getFullName() {
+		return name + "_" + plane;
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public String getNameAndUpdatePlane(int plane){
+		this.plane = plane;
+		return getFullName();
+	}
+
+	private String name;
+
+	public int getPlane() {
+		return plane;
+	}
+
+	public void setPlane(int plane) {
+		this.plane = plane;
+	}
+
+	public Vertex(String name) {
+		this.name = name;
 		this.color = Color.WHITE;
-		this.pi = -1;
+		this.previous = null;
 		this.distanceFromSource = Double.POSITIVE_INFINITY;
+		this.plane = 0;
+	}
+
+	public Vertex(String name, double distanceFromSource) {
+		this.name = name;
+		this.color = Color.WHITE;
+		this.previous = null;
+		this.distanceFromSource = distanceFromSource;
+		this.plane = 0;
+	}
+
+	public Vertex(String name, double distanceFromSource, int plane) {
+		this.name = name;
+		this.color = Color.WHITE;
+		this.previous = null;
+		this.distanceFromSource = distanceFromSource;
+		this.plane = plane;
+	}
+
+	public Vertex copy(int plane){
+		return new Vertex(name,distanceFromSource,plane);
 	}
 
 	public double getDistanceFromSource() {
@@ -24,26 +68,11 @@ public class Vertex {
 		this.distanceFromSource = distanceFromSource;
 	}
 
-	public Color getColor() {
-		return color;
+	public Vertex getPrevious() {
+		return previous;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public void setPrevious(Vertex previous) {
+		this.previous = previous;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public int getPi() {
-		return pi;
-	}
-
-	public void setPi(int u) {
-		this.pi = u;
-	}
-	
-	
-
 }

@@ -1,107 +1,174 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Graph {
 
-	/**
-	 * A map that connects vertices, represented by integers, to the distance
-	 * between neighbors
-	 */
-	private HashMap<Integer, Double>[] neighbors;
-	
-	private int sizeOfPlane;
+	public ArrayList<Edge> getEdges() {
+		return edges;
+	}
 
-	private HashMap[][] plane;
-	
-	public void makePlanes(int sizeOfMap){
-		sizeOfPlane = size();
-		HashMap[] big = new HashMap [(int) (size() * Math.pow(2, sizeOfMap))];
-		plane = new HashMap[(int) Math.pow(2, sizeOfMap)][size()];
-		for(int i = 0; i < big.length; i++){
-			big[i] = new HashMap<Integer, Double>();
-			plane[i / size()][i % size()] =  new HashMap<Integer, Double>();
-		}
-		for(int i = 0; i < big.length; i++){
-			for(int j : neighbors[i % size()].keySet()){
-				big[i].put(j + (i / size()) * size(), neighbors[i % size()].get(j));
-				plane[i / size()][i % size()].put(j + (i / size()) * size(), neighbors[i % size()].get(j));
+	/**
+	 * A list of vertices in the default plane
+	 */
+	private ArrayList<Vertex> vert;
+
+	/**
+	 * A list of edges in all planes
+	 */
+	private ArrayList<ArrayList<Edge>> edgePlane;
+
+	/**
+	 * A list of vertices in all planes
+	 */
+	private ArrayList<ArrayList<Vertex>> vertPlane;
+
+	/**
+	 * A list of edges in the default plane
+	 */
+	private ArrayList<Edge> edges;
+
+
+	//TODO might make a list for return instead
+	public Edge getEdge(String name){
+		for(Edge e : edges){
+			if (e.getEdge(name) != null){
+				return e;
 			}
 		}
-		neighbors = big;
+		return null;
 	}
 
-	public int getSizeOfPlane() {
-		return sizeOfPlane;
-	}
-
-	public void addNeighbor(Edge requirement, int plane) {
-		neighbors[requirement.getStart() + sizeOfPlane * plane].put(requirement.getEnd() + sizeOfPlane * plane, requirement.getLength());
-		neighbors[requirement.getEnd() + sizeOfPlane * plane].put(requirement.getStart() + sizeOfPlane * plane, requirement.getLength());
-	}
-	
-	public void addNeighbor(Edge requirement, int planeA, int planeB, int keyOfConnection) {
-		neighbors[keyOfConnection + planeA * sizeOfPlane].put(keyOfConnection + planeB * sizeOfPlane, 0.0);
-	}
-	
-	@Override
-	public String toString() {
-		String s = "";
-		for(int i = 0; i < neighbors.length; i++){
-			Object[] n = neighbors[i].keySet().toArray();
-			int[] np = new int[n.length];
-			for(int j = 0; j < n.length; j++){
-				np[j] = (int) n[j];
+	//TODO might be reduncent with lists
+	public Edge getEdgePlane(String name, int planeA, int planeB){
+		for(ArrayList<Edge> edge : edgePlane){
+			for(Edge e : edge){
+				if (e.getEdge(name) != null && e.getStart().getPlane() == planeA && e.getEnd().getPlane() == planeB){
+					return e;
+				}
 			}
-			Arrays.sort(np);
-			s += i + " -> " + Arrays.toString(np);
-			s += "\n";
 		}
-		return s;
-	}
-	
-	/**
-	 * The constructor which sets the neighbors
-	 * 
-	 * @param neighbors
-	 *            the list of vertices which are one degree away
-	 */
-	public Graph(HashMap<Integer, Double>[] neighbors) {
-		this.neighbors = neighbors;
+		return null;
 	}
 
-	/**
-	 * Getter for the map given a vertex
-	 * 
-	 * @param v
-	 *            the key of the vertex
-	 */
-	public Map<Integer, Double> getNeighbors(int v) {
-		return neighbors[v];
+	//TODO might need to change to a list that gets all neightbrs regargless of vertPlane
+	public Vertex getVertex(String key) {
+		for (Vertex map : vert){
+			if (map.getName().equals(key)){
+				return map;
+			}
+		}
+		return null;
 	}
 
-	/**
-	 * Setter for the map of neighbors 
-	 * 
-	 * @param neighbors
-	 *            the set of all neighbors
-	 */
-	public void setNeighbors(HashMap<Integer, Double>[] neighbors) {
-		this.neighbors = neighbors;
+	public Vertex getVertex(String key, int plane) {
+		for (Vertex map : vertPlane.get(plane)){
+			if (map.getName().equals(key)){
+				return map;
+			}
+		}
+		return null;
 	}
 
-	
+
+	public ArrayList<Vertex> getVert() {
+		return vert;
+	}
+
+	public void vertToPlanes(int planeIndex){
+		ArrayList<Vertex> copy = new ArrayList<>();
+		for(Vertex v : vert){
+			copy.add(v.copy(planeIndex));
+		}
+		vertPlane.add(copy);
+	}
+
+	public void edgeToPlanes(int planeIndex){
+		ArrayList<Edge> copy = new ArrayList<>();
+		for(Edge e : edges){
+			copy.add(new Edge(e.getStart().copy(planeIndex),e.getEnd().copy(planeIndex), e.getLength()));
+		}
+		edgePlane.add(copy);
+	}
+
+	public Graph(String[] poi, double[][] distance) {
+		vert = new ArrayList<>();
+		edges = new ArrayList<>();
+		for(int i = 0; i < poi.length; i++){
+			vert.add(new Vertex(poi[i]));
+		}
+		for(int i = 0; i < distance.length; i++){
+			for(int j = 0; j < distance[i].length; j++) {
+				edges.add(new Edge(vert.get(i), vert.get(j), distance[i][j]));
+			}
+		}
+		vertPlane = new ArrayList<>();
+		edgePlane = new ArrayList<>();
+
+	}
+
+	public void makePlanes(int numberOfPlanes) {
+		for (int planeIndex = 0; planeIndex < numberOfPlanes; planeIndex++) {
+			vertToPlanes(planeIndex);
+			edgeToPlanes(planeIndex);
+		}
+	}
+
 	/** The number of vertices that a graph has */
-	public int size() {
-		return neighbors.length;
+	public int vertNum() {
+		return  vert.size();
 	}
 
-	public Map<Integer, Double>[] getPlane(int planeIndex){
-		return plane[planeIndex];
+	/** The number of planes of existance*/
+	public int planeNum(){
+		return vertPlane.size();
 	}
-	
-	public int getNumerOfPlanes(){
-		return plane.length;
+
+	public String toString(ArrayList<Edge> edge) {
+		String[] g = new String[vertNum()];
+		int vertIndex;
+		for(Edge e : edge) {
+			if (e.getLength() != 0 && e.getLength() != Double.POSITIVE_INFINITY) {
+				vertIndex = vert.indexOf(getVertex(e.getStart().getName()));
+				if (g[vertIndex] == null || g[vertIndex].isEmpty()) {
+					g[vertIndex] = e.getStart().getFullName() + "->" + e.getEnd().getFullName() + ":" + e.getLength();
+				} else {
+					g[vertIndex] += "," + e.getEnd().getFullName() + ":" + e.getLength();
+				}
+			}
+		}
+		String graph = "";
+		for(String s : g) {
+			graph += s + "\n";
+		}
+		return graph;
 	}
-	
+
+	public String toStringFull(){
+		String g = "";
+		for(ArrayList<Edge> edge : edgePlane){
+			g += toString(edge);
+		}
+		return g;
+	}
+
+	@Override
+	public String toString(){
+		String[] g = new String[vertNum()];
+		int vertIndex;
+		for(Edge e : edges) {
+			if (e.getLength() != 0 && e.getLength() != Double.POSITIVE_INFINITY) {
+				vertIndex = vert.indexOf(e.getStart());
+				if (g[vertIndex] == null || g[vertIndex].isEmpty()) {
+					g[vertIndex] = e.getStart().getName() + "->" + e.getEnd().getName() + ":" + e.getLength();
+				} else {
+					g[vertIndex] += "," + e.getEnd().getName() + ":" + e.getLength();
+				}
+			}
+		}
+		String graph = "";
+		for(String s : g) {
+			graph += s + "\n";
+		}
+		return graph;
+	}
 }

@@ -3,20 +3,9 @@ import java.util.LinkedList;
 
 public class Dijkstra {
 
-	/**
-	 * Given the array index, this tells the distance to that vertex from the
-	 * given source
-	 */
-	private double[] distanceFromSource;
 
 	/** This contains the path from the source to the target */
-	private LinkedList<Integer> path;
-
-	/**
-	 * Given the array index, this tells the last vertex visited alogn the
-	 * shortest path from the source
-	 */
-	private int[] predecessor;
+	private LinkedList<Vertex> path;
 
 	/**
 	 * Finds the shortest path between two points
@@ -28,13 +17,13 @@ public class Dijkstra {
 	 * @param graph
 	 *            the graph where these are located
 	 */
-	public Dijkstra(int source, int target, Graph graph) {
+	public Dijkstra(Vertex source, Vertex target, Graph graph) {
 		searchFrom(graph, source);
-		int u = target;
-		path = new LinkedList<Integer>();
-		while (predecessor[u] != -1) {
+		Vertex u = target;
+		path = new LinkedList<>();
+		while (u.getPrevious() != null) {
 			path.add(0, u);
-			u = predecessor[u];
+			u.setPrevious(u);
 		}
 		path.add(0, u);
 	}
@@ -45,10 +34,10 @@ public class Dijkstra {
 	 * @param q
 	 *            the list of neighbors
 	 */
-	public int findClosestVertex(ArrayList<Integer> q) {
-		Integer u = q.get(0);
-		for (int v : q) {
-			if (distanceFromSource[v] < distanceFromSource[u]) {
+	public Vertex findClosestVertex(ArrayList<Vertex> q) {
+		Vertex u = q.get(0);
+		for (Vertex v : q) {
+			if (v.getDistanceFromSource() < u.getDistanceFromSource()) {
 				u = v;
 			}
 		}
@@ -56,7 +45,7 @@ public class Dijkstra {
 	}
 
 	/** Getter for the path */
-	public LinkedList<Integer> getPath() {
+	public LinkedList<Vertex> getPath() {
 		return path;
 	}
 
@@ -68,24 +57,22 @@ public class Dijkstra {
 	 * @param source
 	 *            where the start is
 	 */
-	public void searchFrom(Graph graph, int source) {
-		ArrayList<Integer> q = new ArrayList<Integer>();
-		distanceFromSource = new double[graph.size()];
-		predecessor = new int[graph.size()];
-		for (int v = 0; v < graph.size(); v++) {
-			distanceFromSource[v] = Double.POSITIVE_INFINITY;
-			predecessor[v] = -1;
+	public void searchFrom(Graph graph, Vertex source) {
+		ArrayList<Vertex> q = new ArrayList<>();
+		for (Vertex v : graph.getVert()) {
+			v.setDistanceFromSource(Double.POSITIVE_INFINITY);
+			v.setPrevious(null);
 			q.add(v);
 		}
-		distanceFromSource[source] = 0;
+		source.setDistanceFromSource(0);
 		while (!q.isEmpty()) {
-			int u = findClosestVertex(q);
-			q.remove(new Integer(u));
-			for (int v : graph.getNeighbors(u).keySet()) {
-				double alt = distanceFromSource[u] + graph.getNeighbors(u).get(v);
-				if (alt < distanceFromSource[v]) {
-					distanceFromSource[v] = alt;
-					predecessor[v] = u;
+			Vertex u = findClosestVertex(q);
+			q.remove(u);
+			for (Vertex v : graph.getVert()) {
+				double alt = u.getDistanceFromSource() + u.getDistanceFromSource();
+				if (alt < v.getDistanceFromSource()) {
+					v.setDistanceFromSource(alt);
+					v.setPrevious(u);
 				}
 			}
 		}
