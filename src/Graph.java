@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Graph {
 
@@ -38,17 +37,6 @@ public class Graph {
 		return null;
 	}
 
-	//TODO might be reduncent with lists
-	public Edge getEdgePlane(String name, int planeA, int planeB){
-		for(ArrayList<Edge> edge : edgePlane){
-			for(Edge e : edge){
-				if (e.getEdge(name) != null && e.getStart().getPlane() == planeA && e.getEnd().getPlane() == planeB){
-					return e;
-				}
-			}
-		}
-		return null;
-	}
 
 	//TODO might need to change to a list that gets all neightbrs regargless of vertPlane
 	public Vertex getVertex(String key) {

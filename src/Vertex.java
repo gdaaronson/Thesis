@@ -1,8 +1,6 @@
 
 public class Vertex {
 
-	private Color color;
-
 	private Vertex previous;
 	
 	private double distanceFromSource;
@@ -34,23 +32,13 @@ public class Vertex {
 
 	public Vertex(String name) {
 		this.name = name;
-		this.color = Color.WHITE;
 		this.previous = null;
 		this.distanceFromSource = Double.POSITIVE_INFINITY;
 		this.plane = 0;
 	}
 
-	public Vertex(String name, double distanceFromSource) {
-		this.name = name;
-		this.color = Color.WHITE;
-		this.previous = null;
-		this.distanceFromSource = distanceFromSource;
-		this.plane = 0;
-	}
-
 	public Vertex(String name, double distanceFromSource, int plane) {
 		this.name = name;
-		this.color = Color.WHITE;
 		this.previous = null;
 		this.distanceFromSource = distanceFromSource;
 		this.plane = plane;
@@ -74,5 +62,10 @@ public class Vertex {
 
 	public void setPrevious(Vertex previous) {
 		this.previous = previous;
+	}
+
+	@Override
+	public String toString(){
+		return name + "_" + plane + ":" + distanceFromSource;
 	}
 }

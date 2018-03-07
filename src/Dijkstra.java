@@ -1,11 +1,19 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Dijkstra {
 
 
+	public ArrayList<String> getPathNames(){
+		ArrayList<String> names = new ArrayList<>();
+		for(Vertex v: path){
+			names.add(v.getName());
+		}
+		return names;
+	}
+
 	/** This contains the path from the source to the target */
-	private LinkedList<Vertex> path;
+	private ArrayList<Vertex> path;
 
 	/**
 	 * Finds the shortest path between two points
@@ -20,10 +28,10 @@ public class Dijkstra {
 	public Dijkstra(Vertex source, Vertex target, Graph graph) {
 		searchFrom(graph, source);
 		Vertex u = target;
-		path = new LinkedList<>();
+		path = new ArrayList<>();
 		while (u.getPrevious() != null) {
 			path.add(0, u);
-			u.setPrevious(u);
+			u = u.getPrevious();
 		}
 		path.add(0, u);
 	}
@@ -45,7 +53,7 @@ public class Dijkstra {
 	}
 
 	/** Getter for the path */
-	public LinkedList<Vertex> getPath() {
+	public ArrayList<Vertex> getPath() {
 		return path;
 	}
 
@@ -69,7 +77,7 @@ public class Dijkstra {
 			Vertex u = findClosestVertex(q);
 			q.remove(u);
 			for (Vertex v : graph.getVert()) {
-				double alt = u.getDistanceFromSource() + u.getDistanceFromSource();
+				double alt = u.getDistanceFromSource() + graph.getEdge(u.getName() + "->" + v.getName()).getLength();
 				if (alt < v.getDistanceFromSource()) {
 					v.setDistanceFromSource(alt);
 					v.setPrevious(u);
