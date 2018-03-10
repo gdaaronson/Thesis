@@ -45,7 +45,8 @@ public class DijkstraTest {
         distUpdate(dist,3,2,2.0);
         distUpdate(dist,4,2,3.0);
 		Graph g = new Graph(poi,dist);
-		Dijkstra d = new Dijkstra(g.getVertex("0"), g.getVertex("2"), g);
+		g.makePlanes(1);
+		Dijkstra d = new Dijkstra("0", "2", g);
         assertEquals("[0, 4, 2]", d.getPathNames().toString());
 
     }
@@ -64,7 +65,8 @@ public class DijkstraTest {
         distUpdate(dist,3,2,18.0);
         distUpdate(dist,4,3,20.0);
 		Graph g = new Graph(poi,dist);
-		Dijkstra d = new Dijkstra(g.getVertex("3"), g.getVertex("0"), g);
+        g.makePlanes(1);
+        Dijkstra d = new Dijkstra("3","0", g);
 		assertEquals("[3, 2, 1, 0]", d.getPathNames().toString());
 	}
 
@@ -78,7 +80,8 @@ public class DijkstraTest {
         distUpdate(dist,2,4,2.0);
         distUpdate(dist,3,4,3.0);
 		Graph g = new Graph(poi,dist);
-		Dijkstra d = new Dijkstra(g.getVertex("0"),g.getVertex("4"), g);
+        g.makePlanes(1);
+        Dijkstra d = new Dijkstra("0","4", g);
 		assertEquals("[0, 1, 2, 4]", d.getPathNames().toString());
 	}
 

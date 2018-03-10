@@ -15,19 +15,10 @@ public class Vertex {
 		return name;
 	}
 
-	public String getNameAndUpdatePlane(int plane){
-		this.plane = plane;
-		return getFullName();
-	}
-
 	private String name;
 
 	public int getPlane() {
 		return plane;
-	}
-
-	public void setPlane(int plane) {
-		this.plane = plane;
 	}
 
 	public Vertex(String name) {
@@ -67,5 +58,9 @@ public class Vertex {
 	@Override
 	public String toString(){
 		return name + "_" + plane + ":" + distanceFromSource;
+	}
+
+	public boolean eq(Vertex vertex) {
+		return vertex.getName().equals(this.name) && vertex.getPlane() == this.plane;
 	}
 }

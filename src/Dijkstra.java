@@ -25,9 +25,9 @@ public class Dijkstra {
 	 * @param graph
 	 *            the graph where these are located
 	 */
-	public Dijkstra(Vertex source, Vertex target, Graph graph) {
-		searchFrom(graph, source);
-		Vertex u = target;
+	public Dijkstra(String source, String target, Graph graph) {
+		searchFrom(graph, graph.getVertexFromPlane(source + "_0"));
+		Vertex u = graph.getVertexFromPlane(target + "_0");
 		path = new ArrayList<>();
 		while (u.getPrevious() != null) {
 			path.add(0, u);
@@ -67,20 +67,24 @@ public class Dijkstra {
 	 */
 	public void searchFrom(Graph graph, Vertex source) {
 		ArrayList<Vertex> q = new ArrayList<>();
-		for (Vertex v : graph.getVert()) {
-			v.setDistanceFromSource(Double.POSITIVE_INFINITY);
-			v.setPrevious(null);
-			q.add(v);
+		for (ArrayList<Vertex> vertices: graph.getVertPlane()) {
+			for (Vertex v : vertices) {
+				v.setDistanceFromSource(Double.POSITIVE_INFINITY);
+				v.setPrevious(null);
+				q.add(v);
+			}
 		}
 		source.setDistanceFromSource(0);
 		while (!q.isEmpty()) {
 			Vertex u = findClosestVertex(q);
 			q.remove(u);
-			for (Vertex v : graph.getVert()) {
-				double alt = u.getDistanceFromSource() + graph.getEdge(u.getName() + "->" + v.getName()).getLength();
-				if (alt < v.getDistanceFromSource()) {
-					v.setDistanceFromSource(alt);
-					v.setPrevious(u);
+			for (ArrayList<Vertex> vertices: graph.getVertPlane()) {
+				for (Vertex v : vertices) {
+					double alt = u.getDistanceFromSource() + graph.getEdgeAll(u.getFullName(), v.getFullName()).getLength();
+					if (alt < v.getDistanceFromSource()) {
+						v.setDistanceFromSource(alt);
+						v.setPrevious(u);
+					}
 				}
 			}
 		}

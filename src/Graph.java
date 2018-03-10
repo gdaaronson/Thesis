@@ -2,15 +2,6 @@ import java.util.ArrayList;
 
 public class Graph {
 
-	public ArrayList<Edge> getEdges() {
-		return edges;
-	}
-
-	/**
-	 * A list of vertices in the default plane
-	 */
-	private ArrayList<Vertex> vert;
-
 	/**
 	 * A list of edges in all planes
 	 */
@@ -21,48 +12,109 @@ public class Graph {
 	 */
 	private ArrayList<ArrayList<Vertex>> vertPlane;
 
-	/**
-	 * A list of edges in the default plane
-	 */
-	private ArrayList<Edge> edges;
+	public ArrayList<Edge> getEdges() {
+		return edges;
+	}
 
+	public ArrayList<ArrayList<Vertex>> getVertPlane() {
+		return vertPlane;
+	}
 
-	//TODO might make a list for return instead
-	public Edge getEdge(String name){
-		for(Edge e : edges){
-			if (e.getEdge(name) != null){
-				return e;
+	public ArrayList<ArrayList<Edge>> getEdgePlane() {
+		return edgePlane;
+	}
+
+	public ArrayList<Vertex> getVertOnAllPlanes(Vertex v){
+		ArrayList<Vertex> vPlane = new ArrayList<>();
+		for (ArrayList<Vertex> vertices: vertPlane){
+			for (Vertex vertex: vertices){
+				if(v.getName().equals(vertex.getName())){
+					vPlane.add(searchThis(vertex));
+				}
+			}
+		}
+		return vPlane;
+	}
+
+	public void makeEdge(String start, String end){
+		edgePlane.get(extractPlane(start)).add(new Edge(searchThis(getVertexFromPlane(start)), searchThis(getVertexFromPlane(end)), 0.0));
+	}
+
+	public Vertex searchThis(String v, int plane){
+		for (ArrayList<Vertex> vertices: vertPlane){
+			for (Vertex vertex: vertices){
+				if(vertex.getName().equals(v) && vertex.getPlane() == plane){
+					return searchThis(vertex);
+				}
 			}
 		}
 		return null;
 	}
 
+	private int extractPlane(String vertex){
+		return Integer.valueOf(vertex.substring(vertex.indexOf('_')+1));
+	}
 
-	//TODO might need to change to a list that gets all neightbrs regargless of vertPlane
+	public Edge getEdgeAll(String start, String end){
+		for(ArrayList<Edge> edges: edgePlane) {
+			for (Edge e : edges) {
+				if (start.equals(e.getStart().getFullName()) && end.equals(e.getEnd().getFullName())) {
+					return e;
+				}
+			}
+		}
+		return null;
+	}
+
+	public Edge getEdgeAll(Vertex start, Vertex end){
+		for(ArrayList<Edge> edges: edgePlane) {
+			for (Edge e : edges) {
+				if (searchThis(start).eq(e.getStart()) && searchThis(end).eq(e.getEnd())) {
+					return e;
+				}
+			}
+		}
+		return null;
+	}
+
 	public Vertex getVertex(String key) {
-		for (Vertex map : vert){
-			if (map.getName().equals(key)){
-				return map;
+		for (Vertex v: vert){
+			if (v.getName().equals(key)){
+					return v;
+				}
+			}
+		return null;
+	}
+
+	public Vertex getVertexFromPlane(String key) {
+		for (ArrayList<Vertex> vertices: vertPlane){
+			for (Vertex vertex : vertices){
+				if (vertex.getFullName().equals(key)){
+					return searchThis(vertex);
+				}
 			}
 		}
 		return null;
 	}
 
-	public Vertex getVertex(String key, int plane) {
-		for (Vertex map : vertPlane.get(plane)){
-			if (map.getName().equals(key)){
-				return map;
+	public Vertex searchThis(Vertex v){
+		for (ArrayList<Vertex> vertices: vertPlane){
+			for (Vertex vertex: vertices){
+				if(v.eq(vertex)){
+					return vertex;
+				}
 			}
 		}
 		return null;
 	}
 
+	public void updateVertex(Vertex v, double distance, Vertex prev){
+		searchThis(v).setPrevious(searchThis(prev));
+		searchThis(v).setDistanceFromSource(distance);
 
-	public ArrayList<Vertex> getVert() {
-		return vert;
 	}
 
-	public void vertToPlanes(int planeIndex){
+	private void vertToPlanes(int planeIndex){
 		ArrayList<Vertex> copy = new ArrayList<>();
 		for(Vertex v : vert){
 			copy.add(v.copy(planeIndex));
@@ -70,13 +122,18 @@ public class Graph {
 		vertPlane.add(copy);
 	}
 
-	public void edgeToPlanes(int planeIndex){
+	private void edgeToPlanes(int planeIndex){
 		ArrayList<Edge> copy = new ArrayList<>();
 		for(Edge e : edges){
 			copy.add(new Edge(e.getStart().copy(planeIndex),e.getEnd().copy(planeIndex), e.getLength()));
 		}
 		edgePlane.add(copy);
+
 	}
+
+	private ArrayList<Vertex> vert;
+
+	private ArrayList<Edge> edges;
 
 	public Graph(String[] poi, double[][] distance) {
 		vert = new ArrayList<>();
@@ -91,7 +148,6 @@ public class Graph {
 		}
 		vertPlane = new ArrayList<>();
 		edgePlane = new ArrayList<>();
-
 	}
 
 	public void makePlanes(int numberOfPlanes) {
@@ -111,12 +167,12 @@ public class Graph {
 		return vertPlane.size();
 	}
 
-	public String toString(ArrayList<Edge> edge) {
+	private String toString(ArrayList<Edge> edge) {
 		String[] g = new String[vertNum()];
 		int vertIndex;
 		for(Edge e : edge) {
 			if (e.getLength() != 0 && e.getLength() != Double.POSITIVE_INFINITY) {
-				vertIndex = vert.indexOf(getVertex(e.getStart().getName()));
+				vertIndex = vertPlane.get(e.getStart().getPlane()).indexOf(getVertexFromPlane(e.getStart().getFullName()));
 				if (g[vertIndex] == null || g[vertIndex].isEmpty()) {
 					g[vertIndex] = e.getStart().getFullName() + "->" + e.getEnd().getFullName() + ":" + e.getLength();
 				} else {
@@ -129,6 +185,34 @@ public class Graph {
 			graph += s + "\n";
 		}
 		return graph;
+	}
+
+	private String toStringAll(ArrayList<Edge> edge) {
+		String[] g = new String[vertNum()];
+		int vertIndex;
+		for(Edge e : edge) {
+			if (e.getLength() != Double.POSITIVE_INFINITY) {
+				vertIndex = vertPlane.get(e.getStart().getPlane()).indexOf(getVertexFromPlane(e.getStart().getFullName()));
+				if (g[vertIndex] == null || g[vertIndex].isEmpty()) {
+					g[vertIndex] = e.getStart().getFullName() + "->" + e.getEnd().getFullName() + ":" + e.getLength();
+				} else {
+					g[vertIndex] += "," + e.getEnd().getFullName() + ":" + e.getLength();
+				}
+			}
+		}
+		String graph = "";
+		for(String s : g) {
+			graph += s + "\n";
+		}
+		return graph;
+	}
+
+	public String toStringAll(){
+		String g = "";
+		for(ArrayList<Edge> edge : edgePlane){
+			g += toStringAll(edge);
+		}
+		return g;
 	}
 
 	public String toStringFull(){
@@ -158,5 +242,17 @@ public class Graph {
 			graph += s + "\n";
 		}
 		return graph;
+	}
+
+	public ArrayList<Vertex> getConnectedVert(Vertex vertex) {
+		ArrayList<Vertex> near = new ArrayList<>();
+		for (ArrayList<Edge> edges : edgePlane){
+			for (Edge edge : edges){
+				if (edge.getStart().eq(vertex) && edge.getLength() != Double.POSITIVE_INFINITY){
+					near.add(edge.getEnd());
+				}
+			}
+		}
+		return near;
 	}
 }

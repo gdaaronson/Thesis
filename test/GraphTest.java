@@ -7,7 +7,7 @@ public class GraphTest {
 
     Graph g;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         @SuppressWarnings("unchecked")
         String[] poi = new String[]{"1","2","3","4","5"};
         double[][] dis = new double[][]{
@@ -35,8 +35,9 @@ public class GraphTest {
             }
         }
         assertEquals(6, counter);
-        assertEquals(6.0,g.getEdge("5->3").getLength(), .01);
-        assertEquals("2",g.getVertex("2").getName());
+        g.makePlanes(1);
+        assertEquals(6.0, g.getEdgeAll("5_0","3_0").getLength(), .01);
+        assertEquals("2", g.getVertex("2").getName());
     }
 
     @Test
@@ -47,10 +48,10 @@ public class GraphTest {
                 "3_1->2_1:3.0,5_1:4.0\n" +
                 "4_1->1_1:5.0\n" +
                 "5_1->3_1:6.0\n";
-        assertEquals("5", g.getVertex("5").getName());
-        assertEquals("5_0", g.getVertex("5").getFullName());
-        assertEquals("5_1", g.getVertex("5", 1).getFullName());
-        assertEquals(1, g.getVertex("3", 1).getPlane());
+        assertEquals("5", g.getVertexFromPlane("5_0").getName());
+        assertEquals("5_0", g.getVertexFromPlane("5_0").getFullName());
+        assertEquals("5_1", g.getVertexFromPlane("5_1").getFullName());
+        assertEquals(1, g.getVertexFromPlane("3_1").getPlane());
         assertEquals(2, g.planeNum()) ;
         assertEquals(shouldBe, g.toStringFull());
     }
