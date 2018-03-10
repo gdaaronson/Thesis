@@ -4,9 +4,6 @@ import java.util.Map;
 
 public class Speedrunning {
 
-    public ArrayList<Vertex> getList() {
-        return list;
-    }
     private Graph graph;
 
     /**
@@ -15,11 +12,13 @@ public class Speedrunning {
      * @param g
      *            The graph
      * @param source
-     *            The start of the game
+     *            The name you used for there start of the game
      * @param target
-     *            The end of the game
+     *            The name you used for the end of the game
      * @param map
-     *            The map which contains the requirements of the game
+     *            The map is what how you unlock things and progress, the string should be formatted as such:
+     *            'key':'start'->'finish', if it unlocks in both directions replace '->' with '<->' and the double is the
+     *            new time at it takes to get between 'start'->'finish'
      */
 
     private ArrayList<Vertex> list;
@@ -41,7 +40,6 @@ public class Speedrunning {
             for(int edgeIndex = planeIndex + 1; edgeIndex < graph.planeNum(); edgeIndex++){
                 if (Integer.bitCount(planeIndex ^ edgeIndex) == 1){
                     int keyIndex = (int)(Math.log(edgeIndex - planeIndex)/Math.log(2));
-//                    String[] info = parse(keys[keyIndex], edgeIndex);
                     String[] info = parse(keys[keyIndex]);
                     //makes it so when a key is retrieve, this should open up the new route in a given plane
                     graph.getEdgeAll(info[1] + "_" + edgeIndex, info[2] + "_" + edgeIndex).setLength(unlock.get(keys[keyIndex]));
@@ -69,6 +67,9 @@ public class Speedrunning {
         findPathTo(targetNew);
     }
 
+    /**
+     * Gives an output without most of the logic attached
+     */
     public ArrayList<String> getSimpleList(){
         ArrayList<String> strings = new ArrayList<>();
         for (Vertex v: list){
@@ -91,6 +92,7 @@ public class Speedrunning {
         }
         list.add(0, u);
     }
+
 
     private String[] parse(String key){
         String[] info = new String[3];

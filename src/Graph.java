@@ -20,10 +20,6 @@ public class Graph {
 		return vertPlane;
 	}
 
-	public ArrayList<ArrayList<Edge>> getEdgePlane() {
-		return edgePlane;
-	}
-
 	public ArrayList<Vertex> getVertOnAllPlanes(Vertex v){
 		ArrayList<Vertex> vPlane = new ArrayList<>();
 		for (ArrayList<Vertex> vertices: vertPlane){
@@ -38,17 +34,6 @@ public class Graph {
 
 	public void makeEdge(String start, String end){
 		edgePlane.get(extractPlane(start)).add(new Edge(searchThis(getVertexFromPlane(start)), searchThis(getVertexFromPlane(end)), 0.0));
-	}
-
-	public Vertex searchThis(String v, int plane){
-		for (ArrayList<Vertex> vertices: vertPlane){
-			for (Vertex vertex: vertices){
-				if(vertex.getName().equals(v) && vertex.getPlane() == plane){
-					return searchThis(vertex);
-				}
-			}
-		}
-		return null;
 	}
 
 	private int extractPlane(String vertex){
@@ -135,6 +120,12 @@ public class Graph {
 
 	private ArrayList<Edge> edges;
 
+	/**
+	 * This generates a graph for the logic of the game
+	 * @param poi should be a list of places/tasks/objects that are needed on the run
+	 * @param distance at the start of the game, put the time that it would take do go from one poi to another, with the
+	 *                 the starting location in the first index and the ending location index in the second array
+	 */
 	public Graph(String[] poi, double[][] distance) {
 		vert = new ArrayList<>();
 		edges = new ArrayList<>();
