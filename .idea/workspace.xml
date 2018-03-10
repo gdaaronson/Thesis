@@ -2,21 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78f4609e-b8f0-4de8-b854-74e9aa46290e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/Thesis/Edge.class" afterPath="$PROJECT_DIR$/out/production/Thesis/Edge.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/Thesis/Graph.class" afterPath="$PROJECT_DIR$/out/production/Thesis/Graph.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/Thesis/Speedrunning.class" afterPath="$PROJECT_DIR$/out/production/Thesis/Speedrunning.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/Thesis/Vertex.class" afterPath="$PROJECT_DIR$/out/production/Thesis/Vertex.class" />
-      <change beforePath="$PROJECT_DIR$/out/test/Thesis/GraphTest.class" afterPath="$PROJECT_DIR$/out/test/Thesis/GraphTest.class" />
-      <change beforePath="$PROJECT_DIR$/out/test/Thesis/SpeedrunningTest.class" afterPath="$PROJECT_DIR$/out/test/Thesis/SpeedrunningTest.class" />
-      <change beforePath="$PROJECT_DIR$/src/Dijkstra.java" afterPath="$PROJECT_DIR$/src/Dijkstra.java" />
-      <change beforePath="$PROJECT_DIR$/src/Edge.java" afterPath="$PROJECT_DIR$/src/Edge.java" />
-      <change beforePath="$PROJECT_DIR$/src/Graph.java" afterPath="$PROJECT_DIR$/src/Graph.java" />
-      <change beforePath="$PROJECT_DIR$/src/Speedrunning.java" afterPath="$PROJECT_DIR$/src/Speedrunning.java" />
-      <change beforePath="$PROJECT_DIR$/src/Vertex.java" afterPath="$PROJECT_DIR$/src/Vertex.java" />
-      <change beforePath="$PROJECT_DIR$/test/DijkstraTest.java" afterPath="$PROJECT_DIR$/test/DijkstraTest.java" />
-      <change beforePath="$PROJECT_DIR$/test/GraphTest.java" afterPath="$PROJECT_DIR$/test/GraphTest.java" />
       <change beforePath="$PROJECT_DIR$/test/SpeedrunningTest.java" afterPath="$PROJECT_DIR$/test/SpeedrunningTest.java" />
     </list>
     <ignored path="Thesis.iws" />
@@ -80,8 +65,8 @@
       <file leaf-file-name="SpeedrunningTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/SpeedrunningTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-146">
-              <caret line="93" column="92" lean-forward="false" selection-start-line="93" selection-start-column="92" selection-end-line="93" selection-end-column="92" />
+            <state relative-caret-position="-751">
+              <caret line="48" column="16" lean-forward="true" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1886#1916#1" expanded="true" />
@@ -149,9 +134,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1441" />
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="41" />
+    <option name="y" value="73" />
     <option name="width" value="1279" />
     <option name="height" value="697" />
   </component>
@@ -336,7 +321,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SpeedrunningTest">
+  <component name="RunManager" selected="JUnit.All in Thesis">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -842,8 +827,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.SpeedrunningTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.All in Thesis" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.All in Thesis" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.SpeedrunningTest" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.DijkstraTest" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.DijkstraTest.testA" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.GraphTest" />
@@ -869,26 +854,8 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 24m 51s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 25m 43s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 29m 38s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 32m 26s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 32m 40s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 39m 34s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 40m 42s.xml">
-      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    <history-entry file="All_in_Thesis - 2018.03.09 at 18h 46m 59s.xml">
+      <configuration name="All in Thesis" configurationId="JUnit" />
     </history-entry>
     <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 41m 29s.xml">
       <configuration name="SpeedrunningTest" configurationId="JUnit" />
@@ -899,13 +866,30 @@
     <history-entry file="SpeedrunningTest - 2018.03.09 at 17h 46m 27s.xml">
       <configuration name="SpeedrunningTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="SpeedrunningTest - 2018.03.09 at 18h 43m 38s.xml">
+      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SpeedrunningTest - 2018.03.09 at 18h 44m 07s.xml">
+      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SpeedrunningTest - 2018.03.09 at 18h 44m 28s.xml">
+      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SpeedrunningTest - 2018.03.09 at 18h 44m 34s.xml">
+      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SpeedrunningTest - 2018.03.09 at 18h 44m 40s.xml">
+      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SpeedrunningTest - 2018.03.09 at 18h 44m 45s.xml">
+      <configuration name="SpeedrunningTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="82041000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1441" y="23" width="1279" height="697" extended-state="6" />
-    <editor active="true" />
+    <frame x="41" y="73" width="1279" height="697" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -915,12 +899,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36464968" sideWeight="0.5207193" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3264" sideWeight="0.47928068" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3264" sideWeight="0.47928068" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24941361" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24941361" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2928" sideWeight="0.47642857" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1248,20 +1232,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Speedrunning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#120#121#0" expanded="true" />
-            <element signature="e#147#148#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4322#4323#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -1283,10 +1253,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Speedrunning.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#120#121#0" expanded="true" />
+            <element signature="e#147#148#0" expanded="true" />
+            <element signature="e#4294#4295#0" expanded="true" />
+            <element signature="e#4322#4323#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/SpeedrunningTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-146">
-          <caret line="93" column="92" lean-forward="false" selection-start-line="93" selection-start-column="92" selection-end-line="93" selection-end-column="92" />
+        <state relative-caret-position="-751">
+          <caret line="48" column="16" lean-forward="true" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1886#1916#1" expanded="true" />
