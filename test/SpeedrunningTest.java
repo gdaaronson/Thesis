@@ -119,7 +119,7 @@ public class SpeedrunningTest {
     }
 
     @Test
-    public void multiUnlockKeyTest(){
+    public void nonUniqueSingleKeyKeyTest(){
         String[] poi = poiMaker("start","key1~1","key2~1","key3~1","gate1~1","gate2~1","end");
         double[][] movement = distanceMaker(poi.length);
         movement[0][1] = 1.0;
@@ -141,4 +141,43 @@ public class SpeedrunningTest {
         Speedrunning s = new Speedrunning(g, "start", "end", map);
         assertEquals("[start, key1~1, key1~1, key2~1, key2~1, gate1~1, gate2~1, end]",s.getSimpleList().toString());
     }
+
+    @Test
+    public void nonUniqueMultiKeyTest(){
+        String[] poi = poiMaker("start","key1~1","key2~1","key3~2","key4~2","gate1~1","gate2~2","gate3~1","gate4~2","end");
+        double[][] movement = distanceMaker(poi.length);
+        movement[0][1] = 1.0;
+        movement[0][2] = 2.0;
+        movement[0][3] = 1.0;
+        movement[0][4] = 2.0;
+        movement[1][0] = 1.0;
+        movement[2][0] = 2.0;
+        movement[3][0] = 1.0;
+        movement[4][0] = 2.0;
+
+        movement[7][9] = 1.0;
+        movement[8][9] = 10.0;
+
+        Graph g = new Graph(poi, movement);
+        Map<String, Double> map = new HashMap<>();
+        map.put("key1~1:key3~2->gate1~1",1.0);
+        map.put("key1~1:key4~2->gate1~1",1.0);
+        map.put("key1~1:gate2~2->gate3~1",1.0);
+
+        map.put("key2~1:key3~2->gate1~1",1.0);
+        map.put("key2~1:key4~2->gate1~1",1.0);
+        map.put("key2~1:gate2~2->gate3~1",1.0);
+
+        map.put("key3~2:key1~1->gate2~2",1.0);
+        map.put("key3~2:key2~1->gate2~2",1.0);
+        map.put("key3~2:gate1~1->gate4~2",1.0);
+
+        map.put("key4~2:key1~1->gate2~2",1.0);
+        map.put("key4~2:key2~1->gate2~2",1.0);
+        map.put("key4~2:gate1~1->gate4~2",1.0);
+
+        Speedrunning s = new Speedrunning(g, "start", "end", map);
+        assertEquals("[start, key3~2, key3~2, start, key1~1, key1~1, gate2~2, gate3~1, end]",s.getSimpleList().toString());
+    }
+
 }
