@@ -32,6 +32,10 @@ public class Graph {
 		return vPlane;
 	}
 
+	public String getVertexNameWithoutPlane(Vertex v){
+		return searchThis(v).getName();
+	}
+
 	public void makeEdge(String start, String end){
 		edgePlane.get(extractPlane(start)).add(new Edge(searchThis(getVertexFromPlane(start)), searchThis(getVertexFromPlane(end)), 0.0));
 	}
@@ -57,6 +61,15 @@ public class Graph {
 				if (searchThis(start).eq(e.getStart()) && searchThis(end).eq(e.getEnd())) {
 					return e;
 				}
+			}
+		}
+		return null;
+	}
+
+	public Edge getEdge(String start, String end) {
+		for (Edge e: edges){
+			if (e.getStart().getName().equals(start) && e.getEnd().getName().equals(end)){
+				return e;
 			}
 		}
 		return null;
@@ -140,6 +153,7 @@ public class Graph {
 		vertPlane = new ArrayList<>();
 		edgePlane = new ArrayList<>();
 	}
+
 
 	public void makePlanes(int numberOfPlanes) {
 		for (int planeIndex = 0; planeIndex < numberOfPlanes; planeIndex++) {

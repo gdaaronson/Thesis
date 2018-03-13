@@ -23,31 +23,63 @@ public class Speedrunning {
 
     private ArrayList<Vertex> list;
 
+    private String[] keeperOfKeys;
+
     public Speedrunning(Graph g, String source, String target, Map<String,Double> unlock) {
         // Initialization
         list = new ArrayList<>();
         graph = g;
+        ArrayList<String> keys = new ArrayList<>();
+        ArrayList<String> gates = new ArrayList<>();
+        keeperOfKeys = new String[unlock.size()];
 
         //Make and connect planes
         graph.makePlanes((int) Math.pow(2,unlock.size()));
-        int plane = unlock.size() - 1;
-        String[] keys = new String[unlock.size()];
-        for(String key: unlock.keySet()) {
-            keys[plane] = key;
-            plane--;
+        int plane = 0;
+        for(String key : unlock.keySet()) {
+            keeperOfKeys[plane] = key;
+            plane++;
         }
-        for (int planeIndex = 0; planeIndex < graph.planeNum() - 1; planeIndex++){
-            for(int edgeIndex = planeIndex + 1; edgeIndex < graph.planeNum(); edgeIndex++){
-                if (Integer.bitCount(planeIndex ^ edgeIndex) == 1){
-                    int keyIndex = (int)(Math.log(edgeIndex - planeIndex)/Math.log(2));
-                    String[] info = parse(keys[keyIndex]);
-                    //makes it so when a key is retrieve, this should open up the new route in a given plane
-                    graph.getEdgeAll(info[1] + "_" + edgeIndex, info[2] + "_" + edgeIndex).setLength(unlock.get(keys[keyIndex]));
-                    if (keys[keyIndex].contains("<")){
-                        graph.getEdgeAll(info[2] + "_" + edgeIndex, info[1] + "_" + edgeIndex).setLength(unlock.get(keys[keyIndex]));
+        for(String key : unlock.keySet()) {
+            String[] p = parse(key);
+            for (String s : getUnique(p[1],p[2])){
+                if (!gates.contains(s)) {
+                    gates.add(s);
+                }
+            }
+            for (String s : getUnique(p[0])) {
+                if(!keys.contains(s)) {
+                    keys.add(s);
+                }
+            }
+        }
+        for (int planeIndex = 0; planeIndex < graph.planeNum() - 1; planeIndex++) {
+            ArrayList<String> used = new ArrayList<>();
+            for (int edgeIndex = planeIndex + 1; edgeIndex < graph.planeNum(); edgeIndex++) {
+                if (Integer.bitCount(planeIndex ^ edgeIndex) == 1) {
+                    int keyIndex = (int) (Math.log(edgeIndex - planeIndex) / Math.log(2));
+                    String[] info = parse(keeperOfKeys[keyIndex]);
+                    if (info.length == 3) {
+                        //makes it so when a key is retrieve, this should open up the new route in a given plane
+                        graph.getEdgeAll(info[1] + "_" + edgeIndex, info[2] + "_" + edgeIndex).setLength(unlock.get(keeperOfKeys[keyIndex]));
+                        if (keeperOfKeys[keyIndex].contains("<")) {
+                            graph.getEdgeAll(info[2] + "_" + edgeIndex, info[1] + "_" + edgeIndex).setLength(unlock.get(keeperOfKeys[keyIndex]));
+                        }
+                        //connects the same edge to a different plane
+                        graph.makeEdge(info[0] + "_" + planeIndex, info[0] + "_" + edgeIndex);
+                    } else {
+                        //if there are non unique keys try the route with some of them
+                        if (notUsed(info[0], info[1], info[2], used)){
+                            //makes it so when a key is retrieve, this should open up the new route in a given plane
+                            graph.getEdgeAll(info[1] + "_" + edgeIndex, info[2] + "_" + edgeIndex).setLength(unlock.get(keeperOfKeys[keyIndex]));
+                            if (keeperOfKeys[keyIndex].contains("<")) {
+                                graph.getEdgeAll(info[2] + "_" + edgeIndex, info[1] + edgeIndex).setLength(unlock.get(keeperOfKeys[keyIndex]));
+                            }
+                            //connects the same edge to a different plane
+                            graph.makeEdge(info[0] + "_" + planeIndex, info[0] + "_" + edgeIndex);
+                            used.add(info[0] + ":" + info[1] + "->" + info[2]);
+                        }
                     }
-                    //connects the same edge to a different plane
-                    graph.makeEdge(info[0] + "_" + planeIndex, info[0] + "_" + edgeIndex);
                 }
             }
         }
@@ -65,6 +97,37 @@ public class Speedrunning {
             }
         }
         findPathTo(targetNew);
+    }
+
+    private boolean notUsed(String key, String start, String end, ArrayList<String> used){
+        for (String full : used){
+            if (full.contains(key + ":") || full.contains(":" + start) || full.contains('>' + end)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private ArrayList<String> getUnique(String key){
+        ArrayList<String> thing = new ArrayList<>();
+        for (String unlock : keeperOfKeys){
+            String s = parse(unlock)[0];
+            if (!thing.contains(s) && unlock.contains(key)){
+                thing.add(s);
+            }
+        }
+        return thing;
+    }
+
+    private ArrayList<String> getUnique(String start, String end){
+        ArrayList<String> thing = new ArrayList<>();
+        for (String unlock : keeperOfKeys){
+            String s = parse(unlock)[1] + "->"+parse(unlock)[2];
+            if (!thing.contains(s) && unlock.contains(start) && unlock.contains(end)) {
+                thing.add(s.substring(0, s.indexOf('-')) +  "->" + s.substring(s.indexOf('>') + 1));
+            }
+        }
+        return thing;
     }
 
     /**
@@ -95,7 +158,17 @@ public class Speedrunning {
 
 
     private String[] parse(String key){
-        String[] info = new String[3];
+        String[] info;
+        if(!key.contains("~")) {
+            info = new String[3];
+        } else {
+            int k = key.indexOf('~');
+            String[] temp = key.substring(k,key.indexOf(':')).split("~");
+            info = new String[3 + temp.length];
+            for (int i = 0; i < temp.length -1; i++){
+                info[i + 3] = temp[i + 1];
+            }
+        }
         info[0] = key.substring(0,key.indexOf(':'));
         if (key.contains("<")){
             info[1] = key.substring(key.indexOf(':') + 1, key.indexOf('<'));

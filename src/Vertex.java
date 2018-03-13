@@ -11,6 +11,12 @@ public class Vertex {
 		return name + "_" + plane;
 	}
 
+	//TODO change to take an input
+//	public String getFullNameAri() {
+//		return name + "~" + aribitrary[0] +"_" + plane;
+//	}
+
+
 	public String getName(){
 		return name;
 	}
